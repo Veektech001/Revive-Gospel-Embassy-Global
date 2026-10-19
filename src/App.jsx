@@ -9,6 +9,11 @@ import FirstTimePage from "./pages/FirstTime";
 import SermonsPage from "./pages/Sermons";
 import GivePage from "./pages/Give";
 import NotFoundPage from "./pages/NotFound";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import ForgotPasswordPage from "./pages/ForgotPassword";
+import ResetPasswordPage from "./pages/ResetPassword";
+import AdminPage from "./pages/Admin";
 
 export default function App() {
   return (
@@ -29,6 +34,11 @@ export default function App() {
           <Route path="/first-time" element={<FirstTimePage />} />
           <Route path="/sermons" element={<SermonsPage />} />
           <Route path="/give" element={<GivePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/admin" element={<AdminPage />} />
           {/* Old addresses still work */}
           <Route path="/firstTime" element={<Navigate to="/first-time" replace />} />
           <Route path="/sermon" element={<Navigate to="/sermons" replace />} />

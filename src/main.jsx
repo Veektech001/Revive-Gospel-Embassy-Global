@@ -9,11 +9,14 @@ import "@fontsource/montserrat/latin-600.css";
 import "@fontsource/montserrat/latin-700.css";
 import "./index.css";
 import App from "./App.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

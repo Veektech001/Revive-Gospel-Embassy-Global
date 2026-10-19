@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/Images/logo.svg";
 import { navLinks } from "../../data/church";
+import { useAuth } from "../../context/AuthContext";
+import { backendEnabled } from "../../lib/api";
 
 export default function Navbar() {
   const { pathname } = useLocation();
+  const { user, isAdmin, logout } = useAuth();
   // The menu remembers which page it was opened on, so it closes itself
   // automatically as soon as you navigate somewhere else. Starts closed.
   const [openOn, setOpenOn] = useState(null);
@@ -39,7 +42,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop links */}
-        <ul className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-6 md:flex lg:gap-8">
           {navLinks.slice(0, -1).map((l) => (
             <li key={l.to}>
               <NavLink to={l.to} className={linkClass}>
@@ -47,6 +50,26 @@ export default function Navbar() {
               </NavLink>
             </li>
           ))}
+          {backendEnabled && isAdmin && (
+            <li>
+              <NavLink to="/admin" className={linkClass}>
+                Admin
+              </NavLink>
+            </li>
+          )}
+          {backendEnabled && (
+            <li>
+              {user ? (
+                <button type="button" onClick={logout} className="text-sm font-semibold text-stone/80 hover:text-stone" title={`Logged in as ${user.name}`}>
+                  Log out
+                </button>
+              ) : (
+                <NavLink to="/login" state={{ from: pathname }} className={linkClass}>
+                  Log in
+                </NavLink>
+              )}
+            </li>
+          )}
           <li>
             <Link to="/give" className="btn-flame py-2">
               Give
@@ -100,6 +123,34 @@ export default function Navbar() {
               </NavLink>
             </li>
           ))}
+          {backendEnabled && isAdmin && (
+            <li className="border-b border-stone/10">
+              <NavLink to="/admin" className="display block py-4 text-4xl text-stone">
+                Admin
+              </NavLink>
+            </li>
+          )}
+          {backendEnabled && (
+            <li className="pt-6">
+              {user ? (
+                <div className="flex items-center justify-between gap-4">
+                  <span className="text-ash">Logged in as {user.name}</span>
+                  <button type="button" onClick={() => { logout(); setOpen(false); }} className="btn-ghost-dark">
+                    Log out
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-3">
+                  <Link to="/login" state={{ from: pathname }} className="btn-flame">
+                    Log in
+                  </Link>
+                  <Link to="/register" state={{ from: pathname }} className="btn-ghost-dark">
+                    Sign up
+                  </Link>
+                </div>
+              )}
+            </li>
+          )}
         </ul>
       </div>
     </header>
