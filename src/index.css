@@ -1,4 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink font-montserrat text-stone antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-flame;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page width + side gutter used by every section */
+  .wrap {
+    @apply mx-auto w-full max-w-site px-5 md:px-8;
+  }
+  .display {
+    @apply font-anton uppercase leading-[0.9] tracking-tight;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-flame {
+    @apply btn bg-flame text-ink hover:bg-[#ffbd57];
+  }
+  .btn-ghost-dark {
+    @apply btn border border-stone/40 text-stone hover:border-stone hover:bg-stone/10;
+  }
+  .btn-ghost-light {
+    @apply btn border border-ink/30 text-ink hover:border-ink hover:bg-ink/5;
+  }
+  .btn-ink {
+    @apply btn bg-ink text-stone hover:bg-coal;
+  }
+  .field {
+    @apply w-full rounded-lg border border-sand bg-white/70 px-4 py-3 text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-ink;
+  }
+}
+
+/* One orchestrated moment: hero photos slide into their rows on load */
+@keyframes slot-in {
+  from {
+    transform: translateX(var(--from, 24px));
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.slot-in {
+  animation: slot-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .slot-in {
+    animation: none;
+  }
+}
