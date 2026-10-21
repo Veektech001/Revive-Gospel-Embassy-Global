@@ -85,12 +85,14 @@ For real emails, fill in the `SMTP_` settings (a Gmail account with an
 ## 4. Everyday use (media team)
 
 1. Go to `yourwebsite/admin` and log in.
-2. **Sermons** tab → fill in title, date, series → choose the MP3 (up to 100 MB on Cloudinary's free plan) → *Upload sermon*.
+2. **Sermons** tab → fill in title, date, series → choose the recording (any audio format, up to 300 MB) → *Upload sermon*.
+   The server automatically converts it to a **64 kbps mono MP3** (about 29 MB per hour) before storing it,
+   so members use as little mobile data as possible. Long sermons take a few minutes to process.
 3. Untick *Show on the website* to save a hidden draft. Use *Hide* / *Show* / *Edit* / *Delete* in the list.
 4. **Members** tab → *Make admin* gives someone upload access.
 
-Tip: a 1-hour sermon exported as **MP3 at 64 kbps mono** is about 28 MB, sounds fine for speech and
-downloads quickly on mobile data.
+To change the quality, set `AUDIO_BITRATE` in `.env` (e.g. `48k` for even smaller files, `96k` for higher quality).
+It only affects sermons uploaded after the change.
 
 ---
 

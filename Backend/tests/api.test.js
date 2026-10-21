@@ -10,6 +10,8 @@ import os from "node:os";
 import path from "node:path";
 import request from "supertest";
 import mongoose from "mongoose";
+import { execFileSync } from "node:child_process";
+import ffmpegPath from "ffmpeg-static";
 
 const { checkConfig } = await import("../utils/config.js");
 const { connectDB, disconnectDB } = await import("../database/db.js");
@@ -32,7 +34,10 @@ before(async () => {
   adminToken = (await request(app).post("/api/auth/login").send({ email: "admin@rge.test", password: "admin-password" })).body.token;
 
   tmp = await fs.mkdtemp(path.join(os.tmpdir(), "rge-test-"));
-  await fs.writeFile(path.join(tmp, "faith.mp3"), Buffer.from("ID3-fake-audio-content"));
+  // A real 20-second stereo WAV, like a raw recording from a mixer (~3.5 MB)
+  execFileSync(ffmpegPath, ["-loglevel", "error", "-f", "lavfi", "-i", "sine=frequency=220:duration=20",
+    "-ac", "2", "-ar", "44100", path.join(tmp, "faith.wav")]);
+  await fs.writeFile(path.join(tmp, "broken.mp3"), Buffer.from("this is not really audio"));
   await fs.writeFile(path.join(tmp, "cover.jpg"), Buffer.from([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3]));
 });
 
@@ -90,10 +95,16 @@ test("admin uploads a sermon with audio and cover", async () => {
     .field("title", "Faith That Burns")
     .field("series", "Foundations")
     .field("date", "2026-02-12")
-    .attach("audio", path.join(tmp, "faith.mp3"), { contentType: "audio/mpeg" })
+    .attach("audio", path.join(tmp, "faith.wav"), { contentType: "audio/wav" })
     .attach("image", path.join(tmp, "cover.jpg"), { contentType: "image/jpeg" });
   assert.equal(res.status, 201, JSON.stringify(res.body));
   assert.equal(res.body.sermon.hasAudio, true);
+  // Compressed: a 3.5 MB WAV becomes a ~160 KB mono MP3 at 64 kbps
+  const original = (await fs.stat(path.join(tmp, "faith.wav"))).size;
+  assert.equal(res.body.sermon.audioFormat, "mp3");
+  assert.ok(res.body.sermon.audioBytes < original / 10, `expected big shrink, got ${res.body.sermon.audioBytes} from ${original}`);
+  assert.ok(res.body.sermon.audioBytes > 120_000 && res.body.sermon.audioBytes < 200_000);
+  assert.equal(res.body.sermon.durationSec, 20);
   assert.equal(res.body.sermon.speaker, "Apostle Light Iwuh");
   assert.match(res.body.sermon.imageUrl, /\/uploads\/images\//);
   sermonId = res.body.sermon.id;
@@ -104,6 +115,14 @@ test("admin uploads a sermon with audio and cover", async () => {
     .field("title", "Bad").field("date", "2026-01-01")
     .attach("audio", path.join(tmp, "cover.jpg"), { contentType: "image/jpeg" });
   assert.equal(wrongType.status, 400);
+
+  const broken = await request(app)
+    .post("/api/sermons")
+    .set("Authorization", `Bearer ${adminToken}`)
+    .field("title", "Broken").field("date", "2026-01-01")
+    .attach("audio", path.join(tmp, "broken.mp3"), { contentType: "audio/mpeg" });
+  assert.equal(broken.status, 400);
+  assert.match(broken.body.error, /couldn't be read/);
 });
 
 test("anyone can browse sermons, but audio details stay private", async () => {
@@ -133,7 +152,9 @@ test("downloading needs a login and gives a working short-lived link", async () 
   const file = await request(app).get(url.pathname + url.search);
   assert.equal(file.status, 200);
   assert.match(file.headers["content-disposition"], /attachment/);
-  assert.equal(file.body.toString(), "ID3-fake-audio-content");
+  assert.match(file.headers["content-disposition"], /\.mp3/);
+  assert.equal(file.headers["content-type"], "audio/mpeg");
+  assert.ok(file.body.length > 120_000);
 
   const forged = await request(app).get(`/api/sermons/${sermonId}/file?token=abc`);
   assert.equal(forged.status, 403);

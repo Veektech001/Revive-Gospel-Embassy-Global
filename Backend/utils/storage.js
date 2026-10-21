@@ -14,6 +14,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { v2 as cloudinary } from "cloudinary";
 import { config, useCloudinary } from "./config.js";
+import { compressAudio } from "./audio.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const UPLOAD_DIR = path.resolve(here, "../uploads");
@@ -41,44 +42,53 @@ const slug = (s) =>
 export async function saveAudio(file, title) {
   const base = `${slug(title)}-${crypto.randomBytes(4).toString("hex")}`;
 
-  if (useCloudinary) {
-    const res = await new Promise((resolve, reject) =>
-      cloudinary.uploader.upload_large(
-        file.path,
-        {
-          resource_type: "video", // Cloudinary treats audio as "video"
-          type: "authenticated", // private
-          folder: `${config.cloudinary.folder}/sermons`,
-          public_id: base,
-          chunk_size: 20 * 1024 * 1024,
-        },
-        (err, result) => (err ? reject(err) : resolve(result))
-      )
-    );
-    await fs.rm(file.path, { force: true });
-    return {
-      provider: "cloudinary",
-      publicId: res.public_id,
-      format: res.format || extOf(file.originalname),
-      bytes: res.bytes,
-      durationSec: res.duration ? Math.round(res.duration) : undefined,
-      originalName: file.originalname,
-    };
+  // Shrink to a small mono MP3 first (see utils/audio.js)
+  let small;
+  try {
+    small = await compressAudio(file.path);
+  } finally {
+    await fs.rm(file.path, { force: true }); // the large original is no longer needed
   }
 
-  await fs.mkdir(AUDIO_DIR, { recursive: true });
-  const name = `${base}.${extOf(file.originalname)}`;
-  await fs.rename(file.path, path.join(AUDIO_DIR, name)).catch(async () => {
-    await fs.copyFile(file.path, path.join(AUDIO_DIR, name));
-    await fs.rm(file.path, { force: true });
-  });
-  return {
-    provider: "local",
-    localPath: name,
-    format: extOf(file.originalname),
-    bytes: file.size,
-    originalName: file.originalname,
-  };
+  try {
+    if (useCloudinary) {
+      const res = await new Promise((resolve, reject) =>
+        cloudinary.uploader.upload_large(
+          small.path,
+          {
+            resource_type: "video", // Cloudinary treats audio as "video"
+            type: "authenticated", // private
+            folder: `${config.cloudinary.folder}/sermons`,
+            public_id: base,
+            chunk_size: 20 * 1024 * 1024,
+          },
+          (err, result) => (err ? reject(err) : resolve(result))
+        )
+      );
+      return {
+        provider: "cloudinary",
+        publicId: res.public_id,
+        format: "mp3",
+        bytes: res.bytes || small.bytes,
+        durationSec: res.duration ? Math.round(res.duration) : small.durationSec,
+        originalName: file.originalname,
+      };
+    }
+
+    await fs.mkdir(AUDIO_DIR, { recursive: true });
+    const name = `${base}.mp3`;
+    await fs.copyFile(small.path, path.join(AUDIO_DIR, name));
+    return {
+      provider: "local",
+      localPath: name,
+      format: "mp3",
+      bytes: small.bytes,
+      durationSec: small.durationSec,
+      originalName: file.originalname,
+    };
+  } finally {
+    await fs.rm(small.path, { force: true });
+  }
 }
 
 /** Save a cover photo. Returns a public URL. */
