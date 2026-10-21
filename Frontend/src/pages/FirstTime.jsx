@@ -9,7 +9,7 @@ import { church } from "../data/church";
 const faqs = [
   {
     q: "When and where do you meet?",
-    a: `Sunday service starts at 8:00 AM and Friday service at 4:30 PM, at the ${church.venue.lines.join(", ")}.`,
+    a: `Sunday service starts at 8:00 AM and Friday service at 4:30 PM, at the ${church.venue.lines.join(" ")}.`,
   },
   {
     q: "What should I wear?",
@@ -26,7 +26,7 @@ const faqs = [
 ];
 
 export default function FirstTimePage() {
-  const joy = leaders.find((l) => l.id === "joy");
+  const Chidimma = leaders.find((l) => l.id === "chidimma");
   const [openFaq, setOpenFaq] = useState(0);
 
   return (
@@ -74,9 +74,9 @@ export default function FirstTimePage() {
 
       <section className="bg-coal">
         <div className="wrap py-20 md:py-28">
-          <LeaderCard leader={joy}>
+          <LeaderCard leader={Chidimma}>
             <a href="#visit-form" className="btn-flame mt-8">
-              Let Pastor Joy know you're coming
+              Let Pastor Chidimma know you're coming
             </a>
           </LeaderCard>
         </div>

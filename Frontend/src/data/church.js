@@ -12,9 +12,9 @@ export const church = {
   mission:
     "To set territories burning for the kingdom without reservation and denominational bias.",
 
-  phone: "+234 706 750 2417",
-  phoneHref: "tel:+2347067502417",
-  email: "ezev2682@gmail.com",
+  phone: "07069713612",
+  phoneHref: "tel:07069713612",
+  email: "revivegospelnetwork@gmail.com",
 
   // Where Sunday and Friday services hold
   venue: {
@@ -27,14 +27,15 @@ export const church = {
   // Head office
   headquarters: {
     label: "Headquarters",
-    lines: ["Beside Omar's Lodge", "Agbani, Enugu State"],
+    lines: ["Ochendo, Obofia Road", "Texaco Junction, Nkanu West, Enugu State"],
     mapUrl:
       "https://www.google.com/maps/search/?api=1&query=Omar%27s+Lodge+Agbani+Enugu",
   },
 
   services: [
-    { day: "Sunday", time: "8:00 AM", name: "Sunday Service" },
-    { day: "Friday", time: "4:30 PM", name: "Friday Service" },
+    { day: "Sunday", time: "8:00 AM", name: "Arise Service" },
+    { day: "Friday", time: "5:00 PM", name: "Revival Atmosphere" },
+    { day: "Thursday", time: "5:00 PM", name: "Prayer Uproar" },
     { day: "Every day", time: "1:00 AM", name: "Daily Prayer Watch" },
   ],
 

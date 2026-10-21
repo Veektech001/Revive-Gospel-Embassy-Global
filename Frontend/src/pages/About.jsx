@@ -5,7 +5,7 @@ import PageHeader from "../components/shared/PageHeader";
 import ServiceTimes from "../components/shared/ServiceTimes";
 import VisionMission from "../components/shared/VisionMission";
 import { church } from "../data/church";
-
+import PastorAndMama from "../assets/Images/pastorAndMama.jpeg";
 const values = [
   "Encounter God",
   "Live worthy of purpose",
@@ -32,7 +32,7 @@ export default function AboutPage() {
               understanding of Scripture.
             </p>
             <p>
-              We gather every Friday at 4:30 PM and every Sunday at 8:00 AM. Our services are
+              We gather every Friday at 5:00 PM and every Sunday at 8:00 AM. Our services are
               informal and full of energy, and everyone is welcome to join us.
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
@@ -59,14 +59,14 @@ export default function AboutPage() {
       <section className="bg-coal">
         <div className="wrap grid gap-10 py-20 md:grid-cols-[1.1fr_1fr] md:items-center md:gap-16 md:py-28">
           <img
-            src={pastorsImage}
+            src={PastorAndMama}
             alt="Members of RGE in prayer"
             loading="lazy"
-            className="aspect-[16/10] w-full rounded-sm object-cover"
+            className="aspect-[10/10] w-full rounded-sm object-cover"
           />
           <div className="min-w-0">
             <p className="text-sm font-semibold text-flame">Our senior pastors</p>
-            <h2 className="display mt-2 text-5xl text-stone md:text-6xl">Light + Nchedo</h2>
+            <h2 className="display mt-2 text-5xl text-stone md:text-6xl">Light + Lillian</h2>
             <p className="mt-5 text-lg text-stone/85">
               Together they are committed to building the church, helping people:
             </p>

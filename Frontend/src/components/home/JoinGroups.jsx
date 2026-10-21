@@ -23,7 +23,7 @@ export default function JoinGroups() {
               <div className="mt-5">
                 {g.whatsappLink ? (
                   <a href={g.whatsappLink} target="_blank" rel="noreferrer" className="btn-flame">
-                    {g.cta} on WhatsApp
+                    {g.cta} 
                   </a>
                 ) : (
                   <span className="text-sm text-ash">WhatsApp link coming soon</span>

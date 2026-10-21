@@ -3,6 +3,7 @@ import { User } from "../models/userModels.js";
 import { signToken } from "../middleWare/auth.js";
 import { HttpError, asyncHandler } from "../utils/httpError.js";
 import { sendEmail } from "../utils/email.js";
+import { welcomeEmail } from "../utils/emailTemplates.js";
 import { config } from "../utils/config.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +39,13 @@ export const register = asyncHandler(async (req, res) => {
   const user = new User({ name, email, phone });
   await user.setPassword(password);
   await user.save();
+
+  // Send the welcome email in the background so sign-up stays fast.
+  // If the email fails, the account is still created.
+  sendEmail({ to: user.email, ...welcomeEmail(user) }).catch((err) =>
+    console.error(`Welcome email to ${user.email} failed:`, err.message)
+  );
+
   res.status(201).json(authResponse(user));
 });
 

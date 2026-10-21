@@ -10,7 +10,7 @@ export default [
     title: "Brothers Conclave",
     text: "Men of RGE growing together in prayer, the Word and accountability.",
     cta: "Join the Brothers Conclave",
-    whatsappLink: "",
+    whatsappLink: "https://chat.whatsapp.com/If6kCWPbhm0H3VumrKFOs2?s=cl&p=a&mlu=4&ilr=4",
     image: { src: brothersImage, alt: "A brother praying during service" },
   },
   {
@@ -18,7 +18,7 @@ export default [
     title: "Sisters Conclave",
     text: "Women of RGE building one another up in faith, friendship and service.",
     cta: "Join the Sisters Conclave",
-    whatsappLink: "",
+    whatsappLink: " https://chat.whatsapp.com/J9IL5cUDUNXJgMxxWGj72M?s=sw&p=i&mlu=0",
     image: { src: sistersImage, alt: "Sisters worshipping together" },
   },
   {
@@ -26,7 +26,7 @@ export default [
     title: "Serve as a worker",
     text: "Choir, ushering, media, protocol and more. Use your gifts to build the house.",
     cta: "Become a worker",
-    whatsappLink: "",
+    whatsappLink: "https://wa.me/2347069713612",
     image: { src: serveImage, alt: "Choir ministering on stage" },
   },
 ];

@@ -1,6 +1,22 @@
-@tailwind base;
+/*@tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities;*/
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #171416;
+  --color-coal: #231F21;
+  --color-stone: #E7E0D6;
+  --color-sand: #CFC4B6;
+  --color-ash: #A89F96;
+  --color-flame: #F2A93B;
+
+  --font-montserrat: "Montserrat", system-ui, sans-serif;
+  --font-anton: "Anton", Impact, Haettenschweiler, sans-serif;
+
+  --max-width-site: 72rem;
+}
+
 
 @layer base {
   html {
@@ -30,36 +46,50 @@
   }
 }
 
+
 @layer components {
   /* Page width + side gutter used by every section */
   .wrap {
     @apply mx-auto w-full max-w-site px-5 md:px-8;
   }
+
   .display {
     @apply font-anton uppercase leading-[0.9] tracking-tight;
   }
+
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
   }
+
   .btn-flame {
-    @apply btn bg-flame text-ink hover:bg-[#ffbd57];
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply bg-flame text-ink hover:bg-[#ffbd57];
   }
+
   .btn-ghost-dark {
-    @apply btn border border-stone/40 text-stone hover:border-stone hover:bg-stone/10;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply border border-stone/40 text-stone hover:border-stone hover:bg-stone/10;
   }
+
   .btn-ghost-light {
-    @apply btn border border-ink/30 text-ink hover:border-ink hover:bg-ink/5;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply border border-ink/30 text-ink hover:border-ink hover:bg-ink/5;
   }
+
   .btn-ink {
-    @apply btn bg-ink text-stone hover:bg-coal;
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply bg-ink text-stone hover:bg-coal;
   }
+
   .field {
     @apply w-full rounded-lg border border-sand bg-white/70 px-4 py-3 text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none;
   }
+
   .label {
     @apply mb-1.5 block text-sm font-semibold text-ink;
   }
 }
+
 
 /* One orchestrated moment: hero photos slide into their rows on load */
 @keyframes slot-in {
