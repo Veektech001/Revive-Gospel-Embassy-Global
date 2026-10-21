@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import aboutImage from "../assets/Images/aboutImage.jpg";
-import pastorsImage from "../assets/Images/fourthHero.jpg";
 import PageHeader from "../components/shared/PageHeader";
 import ServiceTimes from "../components/shared/ServiceTimes";
 import VisionMission from "../components/shared/VisionMission";
 import { church } from "../data/church";
-import PastorAndMama from "../assets/Images/pastorAndMama.jpeg";
+import PastorAndMama from "../assets/Images/PastorAndMama.jpeg";
 const values = [
   "Encounter God",
   "Live worthy of purpose",
