@@ -97,7 +97,7 @@ function SermonForm({ editing, onSaved, onCancel }) {
           className="block w-full text-sm file:mr-3 file:rounded-full file:border-0 file:bg-ink file:px-4 file:py-2 file:text-sm file:font-semibold file:text-stone"
           aria-invalid={!!errors.audio}
         />
-        <p className="mt-1.5 text-xs text-ink/60">{audio ? `${audio.name} · ${mb(audio.size)}` : "MP3 recommended, up to 100 MB."}</p>
+        <p className="mt-1.5 text-xs text-ink/60">{audio ? `${audio.name} · ${mb(audio.size)}` : "Any audio file up to 300 MB. It is compressed automatically so members use less data."}</p>
         {errors.audio && <p className="mt-1 text-sm font-medium text-red-700">{errors.audio}</p>}
       </div>
       <div>
@@ -126,7 +126,7 @@ function SermonForm({ editing, onSaved, onCancel }) {
             <div className="h-full bg-ink transition-[width]" style={{ width: `${progress}%` }} />
           </div>
           <p className="mt-2 text-sm">
-            {progress < 100 ? `Uploading… ${progress}%` : "Processing… this can take a minute for long recordings."}
+            {progress < 100 ? `Uploading… ${progress}%` : "Compressing and saving… this can take a few minutes for a long sermon. Keep this page open."}
           </p>
         </div>
       )}

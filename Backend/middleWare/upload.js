@@ -3,7 +3,7 @@ import multer from "multer";
 import { config } from "../utils/config.js";
 import { HttpError } from "../utils/httpError.js";
 
-const AUDIO_TYPES = ["audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a", "audio/aac", "audio/wav", "audio/x-wav", "audio/ogg", "audio/webm"];
+const AUDIO_TYPES = ["audio/mpeg", "audio/mp3", "audio/mp4", "audio/x-m4a", "audio/m4a", "audio/aac", "audio/wav", "audio/x-wav", "audio/wave", "audio/ogg", "audio/webm", "audio/flac", "audio/x-flac", "audio/amr", "audio/3gpp"];
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 // Files are written to a temp folder first, then moved to storage
@@ -13,7 +13,7 @@ export const sermonUpload = multer({
   fileFilter(req, file, cb) {
     if (file.fieldname === "audio" && AUDIO_TYPES.includes(file.mimetype)) return cb(null, true);
     if (file.fieldname === "image" && IMAGE_TYPES.includes(file.mimetype)) return cb(null, true);
-    const what = file.fieldname === "image" ? "Cover photo must be JPG, PNG or WebP." : "Audio must be MP3, M4A, AAC, WAV or OGG.";
+    const what = file.fieldname === "image" ? "Cover photo must be JPG, PNG or WebP." : "Audio must be an audio file such as MP3, M4A, WAV, AAC, OGG or FLAC.";
     cb(new HttpError(400, what));
   },
 }).fields([

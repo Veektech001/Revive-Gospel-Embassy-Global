@@ -20,7 +20,11 @@ export const config = {
   // Public address of this API (used for local-storage download links)
   publicApiUrl: (env.PUBLIC_API_URL || "").replace(/\/$/, ""),
 
-  maxAudioMb: Number(env.MAX_AUDIO_MB) || 100,
+  // Largest original recording the media team can upload. It is compressed
+  // before storage, so this can be bigger than Cloudinary's 100 MB file limit.
+  maxAudioMb: Number(env.MAX_AUDIO_MB) || 300,
+  // Quality of the compressed MP3 members download. 64k mono ≈ 29 MB per hour.
+  audioBitrate: env.AUDIO_BITRATE || "64k",
   maxImageMb: Number(env.MAX_IMAGE_MB) || 5,
   downloadLinkMinutes: Number(env.DOWNLOAD_LINK_MINUTES) || 10,
 
