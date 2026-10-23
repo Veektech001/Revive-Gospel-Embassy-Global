@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <div className="space-y-5 text-sm">
-          {[church.venue, church.headquarters].map((place) => (
+          {[church.headquarters, church.venue].map((place) => (
             <div key={place.label}>
               <h2 className="mb-1 font-semibold text-flame">{place.label}</h2>
               {place.lines.map((line) => (
@@ -61,8 +61,13 @@ export default function Footer() {
               </a>
             </p>
             <p>
-              <a href={`mailto:${church.email}`} className="break-all hover:text-flame">
-                {church.email}
+              <a href={`mailto:${church.email[0]}`} className="break-all hover:text-flame">
+                {church.email[0]}
+              </a>
+            </p>
+            <p>
+              <a href={`mailto:${church.email[1]}`} className="break-all hover:text-flame">
+                {church.email[1]}
               </a>
             </p>
           </div>

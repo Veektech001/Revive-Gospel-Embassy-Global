@@ -19,7 +19,7 @@ export default [
   },
   {
     id: "building",
-    label: "Church building",
+    label: "Welfare",
     text: "Help raise a permanent home for Revive Gospel Embassy.",
     bank: "FIDELITY BANK",
     accountName: "REVIVE GOSPEL NETWORK",

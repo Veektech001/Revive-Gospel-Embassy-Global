@@ -65,7 +65,7 @@ export default function AboutPage() {
           />
           <div className="min-w-0">
             <p className="text-sm font-semibold text-flame">Our senior pastors</p>
-            <h2 className="display mt-2 text-5xl text-stone md:text-6xl">Light + Lillian</h2>
+            <h2 className="display mt-2 text-5xl text-stone md:text-6xl">Light + Lilian</h2>
             <p className="mt-5 text-lg text-stone/85">
               Together they are committed to building the church, helping people:
             </p>

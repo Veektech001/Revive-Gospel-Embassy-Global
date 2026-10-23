@@ -17,7 +17,7 @@ export default [
     id: "mama",
     name: "Pst. Mrs. Lilly Iwuh",
     role: "Senior Pastor",
-    image: { src: mama, alt: "Pst Lillian" },
+    image: { src: mama, alt: "Pst Lilian" },
     bio: [
       "Pastor Mrs. Nchedochukwu Iwuh is a dedicated follower of Christ who began her walk with God in August 2013. By the grace of God, she serves as a Co-labourer at Revive Gospel Embassy. She holds a degree in Industrial Chemistry. She is happily married to Apostle Iwuh Onyekachi and their union is blessed with lovely children. She is passionate about seeing young people grow into their full potential in Christ, with a deep burden for Godly and effective parenting. A passionate children teacher at heart, she delights in nurturing young souls in the way of the Lord. She loves good and Godly music.",
     ],

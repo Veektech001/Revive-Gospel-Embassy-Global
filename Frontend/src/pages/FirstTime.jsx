@@ -13,20 +13,20 @@ const faqs = [
   },
   {
     q: "What should I wear?",
-    a: "Come as you are. Our services are informal, so wear whatever you're comfortable in.",
+    a: "Come as you are. So wear whatever you're comfortable in, that is decent.",
   },
   {
     q: "What is a service like?",
-    a: "Expect lively worship, prayer and faithful teaching from the Bible. Services are full of energy and everyone is welcome to take part.",
+    a: "Expect lively worship and praise, prayer and faithful teaching from the Bible. Services are full of energy and everyone is welcome to take part.",
   },
   {
     q: "Who do I talk to when I arrive?",
-    a: "Our ushers will welcome you at the door. Let them know it's your first time and they'll introduce you to Pastor Joy and the first-timers team.",
+    a: "Our beautiful ushers will welcome you at the door.",
   },
 ];
 
 export default function FirstTimePage() {
-  const Chidimma = leaders.find((l) => l.id === "chidimma");
+  const lilian = leaders.find((l) => l.id ==="mama");
   const [openFaq, setOpenFaq] = useState(0);
 
   return (
@@ -74,9 +74,9 @@ export default function FirstTimePage() {
 
       <section className="bg-coal">
         <div className="wrap py-20 md:py-28">
-          <LeaderCard leader={Chidimma}>
+          <LeaderCard leader={lilian}>
             <a href="#visit-form" className="btn-flame mt-8">
-              Let Pastor Chidimma know you're coming
+              Let Pastor Lilian know you're coming
             </a>
           </LeaderCard>
         </div>
